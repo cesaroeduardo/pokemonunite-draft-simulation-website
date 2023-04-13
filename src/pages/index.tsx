@@ -1,124 +1,98 @@
-import Image from 'next/image'
 import { Inter } from 'next/font/google'
+import pokemons from '../data/pokemons'
+import { useEffect, useState } from 'react'
+import TeamPickContainer from '@/components/TeamPickContainer'
+import PokemonContainer from '@/components/PokemonContainer'
+import { Team } from '@/types/Team'
 
 const inter = Inter({ subsets: ['latin'] })
 
+const PICK_ORDER = [
+  {team: 0, picks: ['pick1']},
+  {team: 1, picks: ['pick1','pick2']},
+  {team: 0, picks: ['pick2','pick3']},
+  {team: 1, picks: ['pick3','pick4']},
+  {team: 0, picks: ['pick4','pick5']},
+  {team: 1, picks: ['pick5']}
+]
+
+const styles = {
+  
+}
+
 export default function Home() {
+
+  const [pickList, setPickList] = useState(pokemons.map(pkmn => ({...pkmn, picked: undefined})))
+  const [teams, setTeams] = useState<Team[]>([
+    {
+      teamName: 'blueTeam',
+      ban: {},
+      pick1: {},
+      pick2: {},
+      pick3: {},
+      pick4: {},
+      pick5: {},
+    },
+    {
+      teamName: 'redTeam',
+      ban: {},
+      pick1: {},
+      pick2: {},
+      pick3: {},
+      pick4: {},
+      pick5: {},
+    }
+  ])
+  const [pickTurn, setPickTurn] = useState(0)
+
+  useEffect(() => {
+    if (pickTurn === PICK_ORDER.length) {
+      alert("finished")
+    }
+  }, [pickTurn]);
+
+  function selectPick (pokemon: any) {
+    const currentPickTurn = PICK_ORDER[pickTurn]
+    const teamsTemp = teams
+
+    for (let i = 0; i < currentPickTurn.picks.length; i++) {
+      const pick = currentPickTurn.picks[i]
+
+      if (teams[currentPickTurn.team][pick].name === undefined) {
+        teams[currentPickTurn.team] = {
+          ...teams[currentPickTurn.team],
+          [pick]: pokemon
+        }
+
+        const selectedPokemon = pickList.find(pkmn => pkmn.name === pokemon.name)
+        selectedPokemon && (selectedPokemon.picked = currentPickTurn.team)
+
+        break;
+      }
+    }
+
+    console.log('setting team', {teamsTemp})
+    setTeams([...teamsTemp])
+
+    const finishTurn = currentPickTurn.picks.every(pick => teams[currentPickTurn.team][pick].name !== undefined)
+
+    if (finishTurn) {
+      const nextPickTurn = pickTurn + 1
+
+      if (nextPickTurn < PICK_ORDER.length) {
+        setPickTurn(nextPickTurn)
+      }
+    } 
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <div style={{position: 'relative'}}>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      <TeamPickContainer team={teams[0]} side="blue" />
+      <TeamPickContainer team={teams[1]} side="red" />
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      <PokemonContainer pickList={pickList} pickTurn={PICK_ORDER[pickTurn]} selectPick={selectPick} />
+      
+    </div>
   )
 }
