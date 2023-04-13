@@ -8,12 +8,14 @@ import { Team } from '@/types/Team'
 const inter = Inter({ subsets: ['latin'] })
 
 const PICK_ORDER = [
-  {team: 0, picks: ['pick1']},
-  {team: 1, picks: ['pick1','pick2']},
-  {team: 0, picks: ['pick2','pick3']},
-  {team: 1, picks: ['pick3','pick4']},
-  {team: 0, picks: ['pick4','pick5']},
-  {team: 1, picks: ['pick5']}
+  { turn: 0, team: 0, picks: ['ban']},
+  { turn: 1, team: 1, picks: ['ban']},
+  { turn: 2, team: 0, picks: ['pick1']},
+  { turn: 3, team: 1, picks: ['pick1','pick2']},
+  { turn: 4, team: 0, picks: ['pick2','pick3']},
+  { turn: 5, team: 1, picks: ['pick3','pick4']},
+  { turn: 6, team: 0, picks: ['pick4','pick5']},
+  { turn: 7, team: 1, picks: ['pick5']}
 ]
 
 const styles = {

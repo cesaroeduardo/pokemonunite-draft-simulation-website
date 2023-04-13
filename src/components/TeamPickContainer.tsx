@@ -23,17 +23,29 @@ const styles = {
     position: 'absolute',
   },
   selectedPickNameStyle: {
+    width: '40%',
+    textAlign: 'center',
+    paddingTop: 5,
+    paddingBottom: 5,
+    fontWeight: 'bold',
+    color: '#000',
+    right: 25,
+    top: '50%',
+    transform: 'translateY(-50%)',
+    borderBottomLeftRadius: 17,
+    borderBottomRightRadius: 17,
+    position: 'absolute'
+  },
+  labelTypeStyle: (side: string) => ({
     width: '100%',
+    height: 30,
     lineHeight: 1,
     paddingTop: 5,
     paddingBottom: 5,
-    backgroundColor: '#0009',
-    bottom: 0,
-    borderBottomLeftRadius: 17,
-    borderBottomRightRadius: 17,
-    textAlign: "center",
-    position: 'absolute'
-  },
+    backgroundColor: side,
+    borderRadius: 17,
+    textAlign: "center"
+  }),
   selectedPickStyle: (side: string) => ({
     width: 300,
     height: 110,
@@ -56,19 +68,46 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
     setTeamInfo(teamInfoTemp)
   }, [team])
 
+  function getPokemonSelectedImageStyle(image: string) {
+    return {
+      backgroundImage: `url('${image}')`,
+      backgroundPosition: 'left',
+      backgroundSize: '40%',
+      backgroundRepeat: 'no-repeat'
+    }
+  }
+
   return (
     <div id={`${side}-team-picks`} style={{ ...styles.teamPickContainer, ...( side === 'blue' ? styles.blueSidePosition : styles.redSidePosition ) }}>
+
+      <div style={styles.labelTypeStyle(side)}>BAN</div>
+
+      <div
+        id={`${side}-team-ban-1`}
+        style={{
+          ...styles.selectedPickStyle(side),
+          position: 'relative',
+          ...(
+            teamInfo.ban.images ? getPokemonSelectedImageStyle(teamInfo.ban.images.main) : {}
+          )
+        }}
+      >
+        {teamInfo.ban.name !== undefined && (
+          <>
+            <div style={styles.selectedPickNameStyle}>{teamInfo.ban.name}</div>
+          </>
+        )}
+      </div>
+
+      <div style={{...styles.labelTypeStyle(side), marginTop: 30 }}>PICKS</div>
+
       <div
         id={`${side}-team-pick-1`}
         style={{
           ...styles.selectedPickStyle(side),
           position: 'relative',
           ...(
-            teamInfo.pick1.images ? {
-              backgroundImage: `url('${teamInfo.pick1.images.main}')`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover'
-            } : {}
+            teamInfo.pick1.images ? getPokemonSelectedImageStyle(teamInfo.pick1.images.main) : {}
           )
         }}
       >
@@ -84,11 +123,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...styles.selectedPickStyle(side),
           position: 'relative',
           ...(
-            teamInfo.pick2.images ? {
-              backgroundImage: `url('${teamInfo.pick2.images.main}')`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover'
-            } : {}
+            teamInfo.pick2.images ? getPokemonSelectedImageStyle(teamInfo.pick2.images.main) : {}
           )
         }}
       >
@@ -104,11 +139,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...styles.selectedPickStyle(side),
           position: 'relative',
           ...(
-            teamInfo.pick3.images ? {
-              backgroundImage: `url('${teamInfo.pick3.images.main}')`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover'
-            } : {}
+            teamInfo.pick3.images ? getPokemonSelectedImageStyle(teamInfo.pick3.images.main) : {}
           )
         }}
       >
@@ -124,11 +155,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...styles.selectedPickStyle(side),
           position: 'relative',
           ...(
-            teamInfo.pick4.images ? {
-              backgroundImage: `url('${teamInfo.pick4.images.main}')`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover'
-            } : {}
+            teamInfo.pick4.images ? getPokemonSelectedImageStyle(teamInfo.pick4.images.main) : {}
           )
         }}
       >
@@ -144,11 +171,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...styles.selectedPickStyle(side),
           position: 'relative',
           ...(
-            teamInfo.pick5.images ? {
-              backgroundImage: `url('${teamInfo.pick5.images.main}')`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover'
-            } : {}
+            teamInfo.pick5.images ? getPokemonSelectedImageStyle(teamInfo.pick5.images.main) : {}
           )
         }}
       >
