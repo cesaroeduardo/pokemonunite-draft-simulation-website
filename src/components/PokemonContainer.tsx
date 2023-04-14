@@ -106,7 +106,7 @@ export default function PokemonContainer (props: PokemonContainerProps) {
     <>
       <CountdownContainer currentTeam={pickTurn.team === 0 ? 'azul' : 'vermelho'} draftFinished={draftFinished} countdownTime={countdownTime} />
 
-      <div id='pokemon-list-select' className="flex flex-wrap" style={{width: 1000, margin: 'auto'}}>
+      <div id='pokemon-list-select' className="flex flex-wrap" style={{width: 813, margin: 'auto'}}>
       {pickList.map((pokemon, key) => (      
         <div onClick={pokemon.picked !== undefined ? () => {} : () => {
           selectPick(pokemon)
