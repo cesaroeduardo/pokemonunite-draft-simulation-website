@@ -1,16 +1,12 @@
 import { Team } from '@/types/Team'
-import { useEffect, useState } from 'react'
+import { CSSProperties, useEffect, useState } from 'react'
 
 type TeamPickContainerProps = {
   team: any,
   side: string,
-  pickTurn: {
-    team: number,
-    picks: string[],
-  }
 }
 
-const styles = {
+const styles: Record<string, CSSProperties> = {
   blueSidePosition: {
     top: 90,
     left: 60
@@ -35,30 +31,11 @@ const styles = {
     borderBottomLeftRadius: 17,
     borderBottomRightRadius: 17,
     position: 'absolute'
-  },
-  labelTypeStyle: (side: string) => ({
-    width: '100%',
-    height: 30,
-    lineHeight: 1,
-    paddingTop: 5,
-    paddingBottom: 5,
-    backgroundColor: side,
-    borderRadius: 17,
-    textAlign: "center"
-  }),
-  selectedPickStyle: (side: string) => ({
-    width: 300,
-    height: 110,
-    borderColor: side,
-    borderWidth: 3,
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    margin: 5
-  })
+  }
 }
 
 export default function TeamPickContainer(props: TeamPickContainerProps) {
-  const { team, side, pickTurn } = props
+  const { team, side } = props
 
   const [teamInfo, setTeamInfo] = useState<Team>(team)
 
@@ -68,7 +45,20 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
     setTeamInfo(teamInfoTemp)
   }, [team])
 
-  function getPokemonSelectedImageStyle(image: string) {
+  function getLabelTypeStyle (side: string): CSSProperties {
+    return {
+      width: '100%',
+      height: 30,
+      lineHeight: 1,
+      paddingTop: 5,
+      paddingBottom: 5,
+      backgroundColor: side,
+      borderRadius: 17,
+      textAlign: "center"
+    }
+  }
+
+  function getPokemonSelectedImageStyle(image: string): CSSProperties {
     return {
       backgroundImage: `url('${image}')`,
       backgroundPosition: 'left',
@@ -77,15 +67,27 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
     }
   }
 
+  function getSelectedPickStyle (side: string) {
+    return {
+      width: 300,
+      height: 110,
+      borderColor: side,
+      borderWidth: 3,
+      backgroundColor: '#fff',
+      borderRadius: 20,
+      margin: 5
+    }
+  }
+
   return (
     <div id={`${side}-team-picks`} style={{ ...styles.teamPickContainer, ...( side === 'blue' ? styles.blueSidePosition : styles.redSidePosition ) }}>
 
-      <div style={styles.labelTypeStyle(side)}>BAN</div>
+      <div style={getLabelTypeStyle(side)}>BAN</div>
 
       <div
         id={`${side}-team-ban-1`}
         style={{
-          ...styles.selectedPickStyle(side),
+          ...getSelectedPickStyle(side),
           position: 'relative',
           ...(
             teamInfo.ban.images ? getPokemonSelectedImageStyle(teamInfo.ban.images.main) : {}
@@ -99,12 +101,12 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
         )}
       </div>
 
-      <div style={{...styles.labelTypeStyle(side), marginTop: 30 }}>PICKS</div>
+      <div style={{...getLabelTypeStyle(side), marginTop: 30 }}>PICKS</div>
 
       <div
         id={`${side}-team-pick-1`}
         style={{
-          ...styles.selectedPickStyle(side),
+          ...getSelectedPickStyle(side),
           position: 'relative',
           ...(
             teamInfo.pick1.images ? getPokemonSelectedImageStyle(teamInfo.pick1.images.main) : {}
@@ -120,7 +122,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
       <div
         id={`${side}-team-pick-2`}
         style={{
-          ...styles.selectedPickStyle(side),
+          ...getSelectedPickStyle(side),
           position: 'relative',
           ...(
             teamInfo.pick2.images ? getPokemonSelectedImageStyle(teamInfo.pick2.images.main) : {}
@@ -136,7 +138,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
       <div
         id={`${side}-team-pick-3`}
         style={{
-          ...styles.selectedPickStyle(side),
+          ...getSelectedPickStyle(side),
           position: 'relative',
           ...(
             teamInfo.pick3.images ? getPokemonSelectedImageStyle(teamInfo.pick3.images.main) : {}
@@ -152,7 +154,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
       <div
         id={`${side}-team-pick-4`}
         style={{
-          ...styles.selectedPickStyle(side),
+          ...getSelectedPickStyle(side),
           position: 'relative',
           ...(
             teamInfo.pick4.images ? getPokemonSelectedImageStyle(teamInfo.pick4.images.main) : {}
@@ -168,7 +170,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
       <div
         id={`${side}-team-pick-5`}
         style={{
-          ...styles.selectedPickStyle(side),
+          ...getSelectedPickStyle(side),
           position: 'relative',
           ...(
             teamInfo.pick5.images ? getPokemonSelectedImageStyle(teamInfo.pick5.images.main) : {}

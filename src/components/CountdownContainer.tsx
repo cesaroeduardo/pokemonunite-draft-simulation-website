@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { CSSProperties } from 'react'
 
 type CountdownContainerProps = {
   countdownTime: number,
@@ -6,7 +6,7 @@ type CountdownContainerProps = {
   draftFinished: boolean
 }
 
-const styles = {
+const styles: Record<string, CSSProperties> = {
   countdownTimerContainer: {
     margin: 'auto',
     color: '#000',
@@ -28,7 +28,7 @@ export default function CountdownContainer (props: CountdownContainerProps) {
     <div id='countdown-timer-container' style={styles.countdownTimerContainer}>
 
       {draftFinished ? (
-        <div style={{}}>ACABOU O TIME NESSA P&$%$!</div>
+        <div style={{}}>Draft Finalizado!</div>
       ) : (
         <>
           <div style={{fontSize: 24, lineHeight: 0.8}}>Time {currentTeam} escolhendo</div>

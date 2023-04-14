@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { CSSProperties, useEffect, useState } from 'react'
 import CountdownContainer from './CountdownContainer'
 import { Pokemon } from '@/types/Pokemon'
 
@@ -28,16 +28,7 @@ function selectBackgroundPickColor (picked: number) {
   }
 }
 
-const styles = {
-  pickButton: (pokemon: any) => ({
-    cursor: 'pointer',
-    position: 'relative',
-    backgroundColor: 'white',
-    borderRadius: 5,
-    borderColor: selectBackgroundPickColor(pokemon.picked),
-    borderWidth: 3,
-    margin: 5
-  }),
+const styles: Record<string, CSSProperties> = {
   pokemonName: {
     width: MAX_WIDTH_PKMN_BOX,
     lineHeight: 1,
@@ -48,14 +39,6 @@ const styles = {
     textAlign: "center",
     position: 'absolute'
   },
-  pokemonImage: (pokemon: any) => ({
-    backgroundImage: `url('${pokemon.images.main}')`,
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    borderRadius: 5,
-    width: MAX_WIDTH_PKMN_BOX,
-    height: MAX_WIDTH_PKMN_BOX
-  }),
   pickOverlay: {
     backgroundColor: '#6669',
     position: 'absolute',
@@ -96,6 +79,29 @@ export default function PokemonContainer (props: PokemonContainerProps) {
     return () => clearInterval(intervalCd)
   }, [countdownTime])
 
+  function getPokemonImageStyle (pokemon: any): CSSProperties {
+    return {
+      backgroundImage: `url('${pokemon.images.main}')`,
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+      borderRadius: 5,
+      width: MAX_WIDTH_PKMN_BOX,
+      height: MAX_WIDTH_PKMN_BOX
+    }
+  }
+
+  function getPickButtonStyle (pokemon: any): CSSProperties {
+    return {
+      cursor: 'pointer',
+      position: 'relative',
+      backgroundColor: 'white',
+      borderRadius: 5,
+      borderColor: selectBackgroundPickColor(pokemon.picked),
+      borderWidth: 3,
+      margin: 5
+    }
+  }
+
   return (
     <>
       <CountdownContainer currentTeam={pickTurn.team === 0 ? 'azul' : 'vermelho'} draftFinished={draftFinished} countdownTime={countdownTime} />
@@ -110,10 +116,10 @@ export default function PokemonContainer (props: PokemonContainerProps) {
           } else if (pickTurn.turn === 7) {
             setDraftFinished(true)
           }
-        }} key={key} style={styles.pickButton(pokemon)}>
+        }} key={key} style={getPickButtonStyle(pokemon)}>
           {pokemon.picked !== undefined ? <div style={styles.pickOverlay}></div> : <></>}
           <div style={styles.pokemonName}>{pokemon.name}</div>
-          <div style={styles.pokemonImage(pokemon)} />
+          <div style={getPokemonImageStyle(pokemon)} />
         </div>
       ))}
     </div>

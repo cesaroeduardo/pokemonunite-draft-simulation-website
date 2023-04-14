@@ -1,11 +1,7 @@
-import { Inter } from 'next/font/google'
-import pokemons from '../data/pokemons'
+import pokemons from '@/data/pokemons'
 import { useEffect, useState } from 'react'
 import TeamPickContainer from '@/components/TeamPickContainer'
 import PokemonContainer from '@/components/PokemonContainer'
-import { Team } from '@/types/Team'
-
-const inter = Inter({ subsets: ['latin'] })
 
 const PICK_ORDER = [
   { turn: 0, team: 0, picks: ['ban']},
@@ -24,8 +20,8 @@ const styles = {
 
 export default function Home() {
 
-  const [pickList, setPickList] = useState(pokemons.map(pkmn => ({...pkmn, picked: undefined})))
-  const [teams, setTeams] = useState<Team[]>([
+  const [pickList, setPickList] = useState<Record<string, any>[]>(pokemons.map(pkmn => ({...pkmn, picked: undefined})))
+  const [teams, setTeams] = useState<Record<string, any>[]>([
     {
       teamName: 'blueTeam',
       ban: {},
