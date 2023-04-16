@@ -1,5 +1,4 @@
-import { Team } from '@/types/Team'
-import { CSSProperties, useEffect, useState } from 'react'
+import { CSSProperties } from 'react'
 
 type TeamPickContainerProps = {
   team: any,
@@ -61,7 +60,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
 
   function getSelectedPickStyle (side: string) {
     return {
-      width: 300,
+      width: 230,
       height: 110,
       borderColor: side,
       borderWidth: 3,
