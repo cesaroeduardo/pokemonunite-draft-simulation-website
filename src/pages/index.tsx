@@ -2,6 +2,7 @@ import pokemons from '@/data/pokemons'
 import { useEffect, useState } from 'react'
 import TeamPickContainer from '@/components/TeamPickContainer'
 import PokemonContainer from '@/components/PokemonContainer'
+import CountdownContainer from '@/components/CountdownContainer'
 
 const PICK_ORDER = [
   { turn: 0, team: 0, picks: ['ban']},
@@ -13,14 +14,18 @@ const PICK_ORDER = [
   { turn: 6, team: 0, picks: ['pick4','pick5']},
   { turn: 7, team: 1, picks: ['pick5']}
 ]
+const MAX_COUNTDOWN_TIMER = 20
 
 const styles = {
   
 }
 
 export default function Home() {
-
-  const [pickList, setPickList] = useState<Record<string, any>[]>(pokemons.map(pkmn => ({...pkmn, picked: undefined})))
+  const [pickList, setPickList] = useState<Record<string, any>[]>(
+    pokemons
+      .filter(pkmn => pkmn.active)
+      .map(pkmn => ({...pkmn, picked: undefined}))
+  )
   const [teams, setTeams] = useState<Record<string, any>[]>([
     {
       teamName: 'blueTeam',
@@ -42,12 +47,21 @@ export default function Home() {
     }
   ])
   const [pickTurn, setPickTurn] = useState(0)
+  const [draftStatus, setDraftStatus] = useState(0) // 0 not-started, 1 started, 2 paused, 3 finished
+  const [countdownTime, setCountdownTime] = useState(0)
 
   useEffect(() => {
-    if (pickTurn === PICK_ORDER.length) {
-      alert("finished")
+    switch(draftStatus) {
+      case 1:
+        setCountdownTime(MAX_COUNTDOWN_TIMER)
+        break
+
+      case 2:
+        setCountdownTime(0)
+        break
+
     }
-  }, [pickTurn]);
+  }, [draftStatus]);
 
   function selectPick (pokemon: any) {
     const currentPickTurn = PICK_ORDER[pickTurn]
@@ -69,7 +83,6 @@ export default function Home() {
       }
     }
 
-    console.log('setting team', {teamsTemp})
     setTeams([...teamsTemp])
 
     const finishTurn = currentPickTurn.picks.every(pick => teams[currentPickTurn.team][pick].name !== undefined)
@@ -86,10 +99,24 @@ export default function Home() {
   return (
     <div style={{position: 'relative'}}>
 
-      <TeamPickContainer team={teams[0]} side="blue" />
-      <TeamPickContainer team={teams[1]} side="red" />
+      <CountdownContainer 
+        currentTeam={PICK_ORDER[pickTurn].team === 0 ? 'azul' : 'vermelho'}
+        draftStatus={draftStatus}
+        setDraftStatus={setDraftStatus}
+        countdownTime={countdownTime} />
 
-      <PokemonContainer pickList={pickList} pickTurn={PICK_ORDER[pickTurn]} selectPick={selectPick} />
+      {teams.map((team, idx) => <TeamPickContainer key={idx} team={team} side={idx === 0 ? "blue" : "red"} />)}
+
+      <PokemonContainer
+        pickList={pickList}
+        pickTurn={PICK_ORDER[pickTurn]}
+        selectPick={selectPick}
+        MAX_COUNTDOWN_TIMER={MAX_COUNTDOWN_TIMER}
+        countdownTime={countdownTime}
+        draftStatus={draftStatus}
+        setDraftStatus={setDraftStatus}
+        setCountdownTime={setCountdownTime}
+        />
       
     </div>
   )

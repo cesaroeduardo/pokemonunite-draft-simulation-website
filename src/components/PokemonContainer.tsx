@@ -1,5 +1,4 @@
 import { CSSProperties, useEffect, useState } from 'react'
-import CountdownContainer from './CountdownContainer'
 import { Pokemon } from '@/types/Pokemon'
 
 type PokemonContainerProps = {
@@ -9,11 +8,15 @@ type PokemonContainerProps = {
     team: number,
     picks: string[],
   },
-  selectPick: Function
+  selectPick: Function,
+  countdownTime: number,
+  setCountdownTime: Function,
+  draftStatus: number,
+  setDraftStatus: Function,
+  MAX_COUNTDOWN_TIMER: number
 }
 
 const MAX_WIDTH_PKMN_BOX = 100
-const MAX_COUNTDOWN_TIMER = 20
 
 function selectBackgroundPickColor (picked: number) {
   switch (picked) {
@@ -50,18 +53,24 @@ const styles: Record<string, CSSProperties> = {
 
 export default function PokemonContainer (props: PokemonContainerProps) {
 
-  const { pickList, selectPick, pickTurn } = props
-  const [countdownTime, setCountdownTime] = useState(MAX_COUNTDOWN_TIMER)
-  const [ draftFinished, setDraftFinished ] = useState(false)
+  const { 
+    pickList,
+    selectPick,
+    pickTurn,
+    countdownTime,
+    setCountdownTime,
+    draftStatus,
+    setDraftStatus,
+    MAX_COUNTDOWN_TIMER
+  } = props
   
   useEffect(() => {
     const intervalCd = setInterval(() => { 
       if (countdownTime > 0) {
         const cdTime = countdownTime - 1
         setCountdownTime(cdTime)
-      } else {
-        // TODO select pick automatically
-        pickTurn.picks.forEach(el => {
+      } else if (draftStatus) {
+        pickTurn.picks.forEach(_ => {
           const notSelectedPokemonList = pickList.filter(pkmn => pkmn.picked === undefined)
           const randomNumber = Math.random() * notSelectedPokemonList.length
 
@@ -70,7 +79,7 @@ export default function PokemonContainer (props: PokemonContainerProps) {
           if (pickTurn.turn < 7) {
             setCountdownTime(MAX_COUNTDOWN_TIMER)
           } else if (pickTurn.turn === 7) {
-            setDraftFinished(true)
+            setDraftStatus(3)
           }
         })
       }
@@ -104,8 +113,6 @@ export default function PokemonContainer (props: PokemonContainerProps) {
 
   return (
     <>
-      <CountdownContainer currentTeam={pickTurn.team === 0 ? 'azul' : 'vermelho'} draftFinished={draftFinished} countdownTime={countdownTime} />
-
       <div id='pokemon-list-select' className="flex flex-wrap" style={{width: 813, margin: 'auto'}}>
       {pickList.map((pokemon, key) => (      
         <div onClick={pokemon.picked !== undefined ? () => {} : () => {
@@ -114,7 +121,7 @@ export default function PokemonContainer (props: PokemonContainerProps) {
           if (pickTurn.turn < 7) {
             setCountdownTime(MAX_COUNTDOWN_TIMER)
           } else if (pickTurn.turn === 7) {
-            setDraftFinished(true)
+            setDraftStatus(3)
           }
         }} key={key} style={getPickButtonStyle(pokemon)}>
           {pokemon.picked !== undefined ? <div style={styles.pickOverlay}></div> : <></>}

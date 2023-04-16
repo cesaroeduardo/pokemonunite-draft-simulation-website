@@ -4,5 +4,6 @@ export type Pokemon = {
     main: string,
     big: string
   }
-  picked?: number
+  picked?: number,
+  active?: boolean
 }

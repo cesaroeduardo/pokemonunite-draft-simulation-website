@@ -37,14 +37,6 @@ const styles: Record<string, CSSProperties> = {
 export default function TeamPickContainer(props: TeamPickContainerProps) {
   const { team, side } = props
 
-  const [teamInfo, setTeamInfo] = useState<Team>(team)
-
-  useEffect(() => {
-    const teamInfoTemp = team
-
-    setTeamInfo(teamInfoTemp)
-  }, [team])
-
   function getLabelTypeStyle (side: string): CSSProperties {
     return {
       width: '100%',
@@ -90,13 +82,13 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...getSelectedPickStyle(side),
           position: 'relative',
           ...(
-            teamInfo.ban.images ? getPokemonSelectedImageStyle(teamInfo.ban.images.main) : {}
+            team.ban.images ? getPokemonSelectedImageStyle(team.ban.images.main) : {}
           )
         }}
       >
-        {teamInfo.ban.name !== undefined && (
+        {team.ban.name !== undefined && (
           <>
-            <div style={styles.selectedPickNameStyle}>{teamInfo.ban.name}</div>
+            <div style={styles.selectedPickNameStyle}>{team.ban.name}</div>
           </>
         )}
       </div>
@@ -109,13 +101,13 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...getSelectedPickStyle(side),
           position: 'relative',
           ...(
-            teamInfo.pick1.images ? getPokemonSelectedImageStyle(teamInfo.pick1.images.main) : {}
+            team.pick1.images ? getPokemonSelectedImageStyle(team.pick1.images.main) : {}
           )
         }}
       >
-        {teamInfo.pick1.name !== undefined && (
+        {team.pick1.name !== undefined && (
           <>
-            <div style={styles.selectedPickNameStyle}>{teamInfo.pick1.name}</div>
+            <div style={styles.selectedPickNameStyle}>{team.pick1.name}</div>
           </>
         )}
       </div>
@@ -125,13 +117,13 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...getSelectedPickStyle(side),
           position: 'relative',
           ...(
-            teamInfo.pick2.images ? getPokemonSelectedImageStyle(teamInfo.pick2.images.main) : {}
+            team.pick2.images ? getPokemonSelectedImageStyle(team.pick2.images.main) : {}
           )
         }}
       >
-        {teamInfo.pick2.name !== undefined && (
+        {team.pick2.name !== undefined && (
           <>
-            <div style={styles.selectedPickNameStyle}>{teamInfo.pick2.name}</div>
+            <div style={styles.selectedPickNameStyle}>{team.pick2.name}</div>
           </>
         )}
       </div>
@@ -141,13 +133,13 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...getSelectedPickStyle(side),
           position: 'relative',
           ...(
-            teamInfo.pick3.images ? getPokemonSelectedImageStyle(teamInfo.pick3.images.main) : {}
+            team.pick3.images ? getPokemonSelectedImageStyle(team.pick3.images.main) : {}
           )
         }}
       >
-        {teamInfo.pick3.name !== undefined && (
+        {team.pick3.name !== undefined && (
           <>
-            <div style={styles.selectedPickNameStyle}>{teamInfo.pick3.name}</div>
+            <div style={styles.selectedPickNameStyle}>{team.pick3.name}</div>
           </>
         )}
       </div>
@@ -157,13 +149,13 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...getSelectedPickStyle(side),
           position: 'relative',
           ...(
-            teamInfo.pick4.images ? getPokemonSelectedImageStyle(teamInfo.pick4.images.main) : {}
+            team.pick4.images ? getPokemonSelectedImageStyle(team.pick4.images.main) : {}
           )
         }}
       >
-        {teamInfo.pick4.name !== undefined && (
+        {team.pick4.name !== undefined && (
           <>
-            <div style={styles.selectedPickNameStyle}>{teamInfo.pick4.name}</div>
+            <div style={styles.selectedPickNameStyle}>{team.pick4.name}</div>
           </>
         )}
       </div>
@@ -173,13 +165,13 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...getSelectedPickStyle(side),
           position: 'relative',
           ...(
-            teamInfo.pick5.images ? getPokemonSelectedImageStyle(teamInfo.pick5.images.main) : {}
+            team.pick5.images ? getPokemonSelectedImageStyle(team.pick5.images.main) : {}
           )
         }}
       >
-        {teamInfo.pick5.name !== undefined && (
+        {team.pick5.name !== undefined && (
           <>
-            <div style={styles.selectedPickNameStyle}>{teamInfo.pick5.name}</div>
+            <div style={styles.selectedPickNameStyle}>{team.pick5.name}</div>
           </>
         )}
       </div>
