@@ -36,6 +36,6 @@ Please read the [CONTRIBUTING](CONTRIBUTING.md) file before making any contribut
 Contact
 -------
 
-If you have any questions or need help with this project, please contact [contato@bepizu.com.br](mailto:contato@bepizu.com.br).
+If you have any questions or need help with this project, please contact [contato@bepizu.com.br](mailto:contato@bepizu.com.br) or enter on our [Community Server](https://discord.gg/J4GyVvRxNe).
 
 Thank you for your interest in our project!
