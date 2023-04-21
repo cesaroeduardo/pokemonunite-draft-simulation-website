@@ -1,5 +1,6 @@
 import { CSSProperties, useEffect, useState } from 'react'
 import { Pokemon } from '@/types/Pokemon'
+import { DraftStatus } from '@/types/DraftStatus'
 
 type PokemonContainerProps = {
   pickList: Array<Pokemon>,
@@ -11,7 +12,7 @@ type PokemonContainerProps = {
   selectPick: Function,
   countdownTime: number,
   setCountdownTime: Function,
-  draftStatus: number,
+  draftStatus: DraftStatus,
   setDraftStatus: Function,
   MAX_COUNTDOWN_TIMER: number
 }

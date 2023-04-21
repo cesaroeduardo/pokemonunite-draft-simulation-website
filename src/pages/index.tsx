@@ -1,8 +1,9 @@
-import pokemons from '@/data/pokemons'
 import { useEffect, useState } from 'react'
+import pokemons from '@/data/pokemons'
 import TeamPickContainer from '@/components/TeamPickContainer'
 import PokemonContainer from '@/components/PokemonContainer'
 import CountdownContainer from '@/components/CountdownContainer'
+import { DraftStatus } from '@/types/DraftStatus'
 
 const PICK_ORDER = [
   { turn: 0, team: 0, picks: ['ban']},
@@ -47,17 +48,13 @@ export default function Home() {
     }
   ])
   const [pickTurn, setPickTurn] = useState(0)
-  const [draftStatus, setDraftStatus] = useState(0) // 0 not-started, 1 started, 2 paused, 3 finished
+  const [draftStatus, setDraftStatus] = useState<DraftStatus>(DraftStatus.NotStarted) // 0 not-started, 1 started, 2 paused, 3 finished
   const [countdownTime, setCountdownTime] = useState(0)
 
   useEffect(() => {
     switch(draftStatus) {
-      case 1:
+      case DraftStatus.Started:
         setCountdownTime(MAX_COUNTDOWN_TIMER)
-        break
-
-      case 2:
-        setCountdownTime(0)
         break
 
     }
