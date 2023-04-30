@@ -23,7 +23,7 @@ const MAX_HEIGHT_PKMN_BOX = 126
 const styles: Record<string, CSSProperties> = {
   pickOverlay: {
     position: 'absolute',
-    width: MAX_WIDTH_PKMN_BOX,
+    width: '100%',
     height: MAX_HEIGHT_PKMN_BOX,
     zIndex: 100
   }
@@ -100,7 +100,7 @@ export default function PokemonContainer(props: PokemonContainerProps) {
       backgroundRepeat: 'no-repeat',
       marginTop: -12,
       marginBottom: 12,
-      width: MAX_WIDTH_PKMN_BOX,
+      width: '100%',
       height: MAX_HEIGHT_PKMN_BOX,
       opacity: selectBackgroundPickOpacity(pokemon.picked),
       zIndex: 9999
@@ -149,7 +149,7 @@ export default function PokemonContainer(props: PokemonContainerProps) {
 
   function getPokemonName(pokemon: any): CSSProperties {
     return {
-      width: MAX_WIDTH_PKMN_BOX,
+      width: '100%',
       fontSize: 13,
       fontFamily: 'Exo',
       paddingTop: 4,
@@ -171,9 +171,9 @@ export default function PokemonContainer(props: PokemonContainerProps) {
 
   return (
     <>
-      <div id='pokemon-list-select' className="flex flex-wrap" style={{ width: 813, margin: 'auto', marginTop: '64px', }}>
+      <div id='pokemon-list-select' className="grid mt-16 ml-auto mr-auto w-7/12 gap-x-1 sm:grid-cols-3 sm:scale-[.75] sm:-mt-64 md:grid-cols-6 md:w-8/12 md:gap-x-[1rem] md:scale-[1] md:mt-16 lg:grid-cols-8 lg:gap-x-[.5rem] lg:gap-y-[.5rem] lg:mt-16 lg:w-7/12">
         {pickList.map((pokemon, key) => (
-          <div
+          <div className="w-28"
             onClick={pokemon.picked !== undefined ? () => { } : () => {
               selectPick(pokemon)
 

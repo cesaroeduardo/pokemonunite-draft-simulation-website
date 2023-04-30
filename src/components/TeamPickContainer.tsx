@@ -121,7 +121,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
 
   function selectedPickNameStyle(side: string): CSSProperties {
     return {
-      width: 150,
+      width: 170,
       fontWeight: '500',
       fontStyle: 'normal',
       fontSize: '18px',
@@ -139,8 +139,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
 
   function getSelectedPickStyle (side: string) {
     return {
-      width: 240,
-      height: 100,
+      height: 96,
       backgroundColor: '#00000040',
       borderRadius: 12,
       display: 'flex',
@@ -150,8 +149,8 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
 
   function getSelectedPickFrame (side: string) {
     return {
-      width: 100,
-      height: 100,
+      width: 96,
+      height: 96,
       borderWidth: 3,
       backgroundColor: '#fff',
       borderRadius: 12,
@@ -161,7 +160,6 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
 
   function getSelectedPickTrainer (side: string): CSSProperties {
     return {
-      display: 'flex',
       flexDirection: 'column'
     }
   }
@@ -180,6 +178,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
 {/* TEAM PICK 1 */}
       <div
         id={`${side}-team-pick-1`}
+        className='w-64 sm:w-24 md:w-24 lg:w-64'
         style={{
           ...getSelectedPickStyle(side),
           ...( side === 'blue' ? styles.blueSidePositionPicks : styles.redSidePositionPicks )
@@ -195,6 +194,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           )
         }}></div>
         <div
+          className='flex sm:hidden md:hidden lg:flex'
           style={{
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
@@ -229,6 +229,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           )
         }}></div>
         <div
+        className='flex sm:hidden md:hidden lg:flex'
         style={{
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
@@ -263,12 +264,13 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           )
         }}></div>
         <div
+        className='flex sm:hidden md:hidden lg:flex'
         style={{
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
         }}>
           <Avatar />
-          <div 
+          <div
             style={{ 
             ...selectedPickNameStyle(side), 
             ...( side === 'blue' ? styles.blueSidePositionName : styles.redSidePositionName ) 
@@ -297,6 +299,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           )
         }}></div>
         <div
+        className='flex sm:hidden md:hidden lg:flex'
         style={{
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
@@ -331,12 +334,13 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           )
         }}></div>
         <div
-        style={{
-          ...getSelectedPickTrainer(side),
-          ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
+          className='flex sm:hidden md:hidden lg:flex'
+          style={{
+            ...getSelectedPickTrainer(side),
+            ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
         }}>
           <Avatar />
-          <div 
+          <div
             style={{ 
             ...selectedPickNameStyle(side), 
             ...( side === 'blue' ? styles.blueSidePositionName : styles.redSidePositionName ) 
