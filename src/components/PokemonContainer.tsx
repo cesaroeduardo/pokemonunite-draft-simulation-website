@@ -185,7 +185,7 @@ export default function PokemonContainer(props: PokemonContainerProps) {
             }} key={key} style={getPickButtonStyle(pokemon)}>
             {pokemon.picked !== undefined ? <div style={styles.pickOverlay}></div> : <></>}
             <div style={getPokemonName(pokemon)}>{pokemon.name}</div>
-            <div style={getPokemonImageStyle(pokemon)} />
+            <div className="transform transition-all duration-300 hover:scale-110" style={getPokemonImageStyle(pokemon)} />
           </div>
         ))}
       </div>
