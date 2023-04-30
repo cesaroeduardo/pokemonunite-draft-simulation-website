@@ -187,7 +187,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
         }}>
-          <img src='avatar.png' width={86}></img>
+          <img src='avatar.png' width={86} title='Avatar image'/>
           <div 
             style={{ 
             ...selectedPickNameStyle(side), 
@@ -221,7 +221,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
         }}>
-          <img src='avatar.png' width={86}></img>
+          <img src='avatar.png' width={86} title='Avatar image'></img>
           <div 
             style={{ 
             ...selectedPickNameStyle(side), 
@@ -255,7 +255,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
         }}>
-          <img src='avatar.png' width={86}></img>
+          <img src='avatar.png' width={86} title='Avatar image'/>
           <div 
             style={{ 
             ...selectedPickNameStyle(side), 
@@ -289,7 +289,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
         }}>
-          <img src='avatar.png' width={86}></img>
+          <img src='avatar.png' width={86} title='Avatar image'/>
           <div 
             style={{ 
             ...selectedPickNameStyle(side), 
@@ -323,7 +323,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
         }}>
-          <img src='avatar.png' width={86}></img>
+          <img src='avatar.png' width={86} title='Avatar image'/>
           <div 
             style={{ 
             ...selectedPickNameStyle(side), 
