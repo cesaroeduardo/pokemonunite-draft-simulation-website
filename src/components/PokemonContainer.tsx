@@ -151,9 +151,13 @@ export default function PokemonContainer(props: PokemonContainerProps) {
     return {
       width: MAX_WIDTH_PKMN_BOX,
       fontSize: 13,
+      fontFamily: 'Exo',
       paddingTop: 4,
       paddingBottom: 4,
-      fontWeight: 'bold',
+      textTransform: 'uppercase',
+      letterSpacing: '.5px',
+      fontStyle: 'italic',
+      fontWeight: '900',
       borderInlineWidth: 3,
       borderInlineColor: selectBackgroundPickColor(pokemon.picked),
       backgroundColor: selectBackgroundPickColor(pokemon.picked),
@@ -167,7 +171,7 @@ export default function PokemonContainer(props: PokemonContainerProps) {
 
   return (
     <>
-      <div id='pokemon-list-select' className="flex flex-wrap" style={{ width: 813, margin: 'auto' }}>
+      <div id='pokemon-list-select' className="flex flex-wrap" style={{ width: 813, margin: 'auto', marginTop: '44px', }}>
         {pickList.map((pokemon, key) => (
           <div
             onClick={pokemon.picked !== undefined ? () => { } : () => {
