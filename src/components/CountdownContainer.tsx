@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect } from 'react'
+import { CSSProperties } from 'react'
 import { Button } from "@material-tailwind/react";
 import { useRouter } from 'next/router';
 

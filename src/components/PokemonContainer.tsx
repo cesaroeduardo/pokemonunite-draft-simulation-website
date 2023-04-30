@@ -64,7 +64,7 @@ export default function PokemonContainer(props: PokemonContainerProps) {
     }, 1000)
 
     return () => clearInterval(intervalCd)
-  }, [countdownTime])
+  })
 
   function selectBackgroundPickColor(picked: number) {
     switch (picked) {
@@ -171,7 +171,7 @@ export default function PokemonContainer(props: PokemonContainerProps) {
 
   return (
     <>
-      <div id='pokemon-list-select' className="flex flex-wrap" style={{ width: 813, margin: 'auto', marginTop: '44px', }}>
+      <div id='pokemon-list-select' className="flex flex-wrap" style={{ width: 813, margin: 'auto', marginTop: '64px', }}>
         {pickList.map((pokemon, key) => (
           <div
             onClick={pokemon.picked !== undefined ? () => { } : () => {

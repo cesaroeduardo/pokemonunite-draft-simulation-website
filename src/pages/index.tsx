@@ -4,8 +4,6 @@ import TeamPickContainer from '@/components/TeamPickContainer'
 import PokemonContainer from '@/components/PokemonContainer'
 import CountdownContainer from '@/components/CountdownContainer'
 import { DraftStatus } from '@/types/DraftStatus'
-import "@fontsource/pt-sans";
-import "@fontsource/exo";
 
 const PICK_ORDER = [
   { turn: 0, team: 0, picks: ['ban']},
