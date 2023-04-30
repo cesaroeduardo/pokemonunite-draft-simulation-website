@@ -64,7 +64,7 @@ export default function PokemonContainer(props: PokemonContainerProps) {
     }, 1000)
 
     return () => clearInterval(intervalCd)
-  }, [countdownTime])
+  })
 
   function selectBackgroundPickColor(picked: number) {
     switch (picked) {
