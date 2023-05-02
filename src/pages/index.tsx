@@ -97,7 +97,7 @@ export default function Home() {
     <div style={{position: 'relative'}}>
 
       <CountdownContainer 
-        currentTeam={PICK_ORDER[pickTurn].team === 0 ? 'azul' : 'vermelho'}
+        currentTeam={PICK_ORDER[pickTurn].team === 0 ? 'roxo' : 'laranja'}
         draftStatus={draftStatus}
         setDraftStatus={setDraftStatus}
         countdownTime={countdownTime} />

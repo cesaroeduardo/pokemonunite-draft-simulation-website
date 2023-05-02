@@ -1,17 +1,29 @@
 import { CSSProperties } from 'react'
+import Image from 'next/image'
 
 type TeamPickContainerProps = {
   team: any,
   side: string,
 }
 
+function Avatar() {
+  return (
+    <Image
+      src="/avatar.png"
+      alt="Avatar image"
+      width={86}
+      height={86}
+    />
+  )
+}
+
 const styles: Record<string, CSSProperties> = {
   blueSidePosition: {
-    top: 90,
+    top: 140,
     left: 60
   },
   redSidePosition: {
-    top: 90,
+    top: 140,
     right: 60
   },
   teamPickContainer: {
@@ -23,7 +35,7 @@ const styles: Record<string, CSSProperties> = {
   selectedBanStyle: {
     width: 53,
     height: 53,
-    top: -70,
+    top: -85,
     borderColor: '#BE433C',
     borderWidth: 4,
     backgroundColor: '#52556750',
@@ -110,9 +122,14 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
   function selectedPickNameStyle(side: string): CSSProperties {
     return {
       width: 150,
-      fontWeight: '400',
+      fontWeight: '500',
+      fontStyle: 'normal',
+      fontSize: '18px',
       color: '#220A3D',
+      lineHeight: '24px',
+      letterSpacing: '.24px',
       position: 'relative',
+      fontFamily: "PT Sans",
       paddingLeft: 14,
       paddingBottom: 4,
       paddingRight: 14,
@@ -182,7 +199,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
         }}>
-          <img src='avatar.png'></img>
+          <Avatar />
           <div 
             style={{ 
             ...selectedPickNameStyle(side), 
@@ -216,7 +233,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
         }}>
-          <img src='avatar.png'></img>
+          <Avatar />
           <div 
             style={{ 
             ...selectedPickNameStyle(side), 
@@ -250,7 +267,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
         }}>
-          <img src='avatar.png'></img>
+          <Avatar />
           <div 
             style={{ 
             ...selectedPickNameStyle(side), 
@@ -284,7 +301,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
         }}>
-          <img src='avatar.png'></img>
+          <Avatar />
           <div 
             style={{ 
             ...selectedPickNameStyle(side), 
@@ -318,7 +335,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
         }}>
-          <img src='avatar.png'></img>
+          <Avatar />
           <div 
             style={{ 
             ...selectedPickNameStyle(side), 
