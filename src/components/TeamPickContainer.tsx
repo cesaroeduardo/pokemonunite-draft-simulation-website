@@ -135,7 +135,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
   }
 
   return (
-    <div className='grid gap-y-2 sm:scale-[.65] md:scale-[1] lg:scale-[1] sm:-mt-44' id={`${side}-team-picks`} style={{ ...styles.teamPickContainer, ...( side === 'blue' ? styles.blueSidePosition : styles.redSidePosition ) }}>
+    <div className='grid gap-y-2 mt-0 sm:scale-[.65] md:scale-[1] lg:scale-[1] sm:-mt-44 md:mt-0 lg:mt-0 ' id={`${side}-team-picks`} style={{ ...styles.teamPickContainer, ...( side === 'blue' ? styles.blueSidePosition : styles.redSidePosition ) }}>
 
 {/* BAN AREA */}
       <div
