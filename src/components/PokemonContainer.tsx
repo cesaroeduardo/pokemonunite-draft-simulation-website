@@ -142,7 +142,6 @@ export default function PokemonContainer(props: PokemonContainerProps) {
       backgroundRepeat: 'no-repeat',
       borderColor: selectBackgroundPickColor(pokemon.picked),
       borderWidth: 3,
-      margin: 5,
       zIndex: 999
     }
   }
@@ -171,9 +170,9 @@ export default function PokemonContainer(props: PokemonContainerProps) {
 
   return (
     <>
-      <div id='pokemon-list-select' className="grid mt-16 ml-auto mr-auto w-7/12 gap-x-1 sm:grid-cols-3 sm:scale-[.75] sm:-mt-64 md:grid-cols-6 md:w-8/12 md:gap-x-[1rem] md:scale-[1] md:mt-16 lg:grid-cols-8 lg:gap-x-[.5rem] lg:gap-y-[.5rem] lg:mt-16 lg:w-7/12">
+      <div id='pokemon-list-select' className="grid absolute mt-16 justify-center w-screen sm:px-24 md:px-[16rem] lg:px-[24rem] gap-x-1 md:mt-16 sm: gap-y-3 md:gap-x-[1rem] lg:gap-x-[.5rem]  lg:gap-y-[.5rem] sm:-mt-[10rem] lg:mt-16 sm:scale-[.75] md:scale-[1] lg:scale-[1] sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
         {pickList.map((pokemon, key) => (
-          <div className="w-28"
+          <div className="w-28 m-auto"
             onClick={pokemon.picked !== undefined ? () => { } : () => {
               selectPick(pokemon)
 

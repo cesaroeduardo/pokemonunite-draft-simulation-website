@@ -10,13 +10,10 @@ module.exports = withMT({
     theme: {
         screens: {
             'sm': '375px',
-            // => @media (min-width: 640px) { ... }
 
             'md': '1024px',
-            // => @media (min-width: 1024px) { ... }
 
-            'lg': '1366px',
-            // => @media (min-width: 1280px) { ... }
+            'lg': '1366px'
         },
         extend: {
             backgroundImage: {

@@ -18,40 +18,23 @@ function Avatar() {
 }
 
 const styles: Record<string, CSSProperties> = {
-  blueSidePosition: {
-    top: 140,
-    left: 60
-  },
-  redSidePosition: {
-    top: 140,
-    right: 60
-  },
-  teamPickContainer: {
-    position: 'absolute',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 24
-  },
   selectedBanStyle: {
     width: 53,
     height: 53,
-    top: -85,
     borderColor: '#BE433C',
     borderWidth: 4,
     backgroundColor: '#52556750',
     borderRadius: 8,
-    position: 'absolute',
+    position: 'relative',
     backgroundImage: `url('/icon-ban.svg')`,
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat'
   },
   blueSidePositionBan: {
-    left: 0,
     float: 'left'
   },
   redSidePositionBan: {
-    right: 0,
-    float: 'right'
+    float: 'right' 
   },
   blueSidePositionPicks: {
     flexDirection: 'row'
@@ -96,19 +79,6 @@ const styles: Record<string, CSSProperties> = {
 
 export default function TeamPickContainer(props: TeamPickContainerProps) {
   const { team, side } = props
-
-  function getLabelTypeStyle (side: string): CSSProperties {
-    return {
-      width: '100%',
-      height: 30,
-      lineHeight: 1,
-      paddingTop: 5,
-      paddingBottom: 5,
-      backgroundColor: side,
-      borderRadius: 17,
-      textAlign: "center"
-    }
-  }
 
   function getPokemonSelectedImageStyle(image: string): CSSProperties {
     return {
@@ -165,20 +135,23 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
   }
 
   return (
-    <div id={`${side}-team-picks`} style={{ ...styles.teamPickContainer, ...( side === 'blue' ? styles.blueSidePosition : styles.redSidePosition ) }}>
+    <div className='grid gap-y-2 sm:scale-[.65] md:scale-[1] lg:scale-[1] sm:-mt-44' id={`${side}-team-picks`} style={{ ...styles.teamPickContainer, ...( side === 'blue' ? styles.blueSidePosition : styles.redSidePosition ) }}>
 
 {/* BAN AREA */}
       <div
+        className='sm:w-24 md:w-24 lg:w-auto sm:mb-2 md:mb-4 lg:mb-4'
         id={`${side}-team-ban-1`}
         style={{ ...styles.selectedBanStyle, ...( side === 'blue' ? styles.blueSidePositionBan : styles.redSidePositionBan ), 
         ...(team.ban.images ? getPokemonSelectedImageStyle(team.ban.images.main) : {}) }}
       >
       </div>
 
+<div className='grid sm:gap-y-3 md:gap-y-7 lg:gap-y-7'>
+
 {/* TEAM PICK 1 */}
       <div
         id={`${side}-team-pick-1`}
-        className='w-64 sm:w-24 md:w-24 lg:w-64'
+        className='w-auto sm:w-24 md:w-24 lg:w-auto'
         style={{
           ...getSelectedPickStyle(side),
           ...( side === 'blue' ? styles.blueSidePositionPicks : styles.redSidePositionPicks )
@@ -194,8 +167,8 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           )
         }}></div>
         <div
-          className='flex sm:hidden md:hidden lg:flex'
-          style={{
+        className='flex xs:hidden sm:hidden md:hidden lg:flex'
+        style={{
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
         }}>
@@ -214,6 +187,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
 {/* TEAM PICK 2 */}
       <div
         id={`${side}-team-pick-2`}
+        className='w-auto sm:w-24 md:w-24 lg:w-auto '
         style={{
           ...getSelectedPickStyle(side),
           ...( side === 'blue' ? styles.blueSidePositionPicks : styles.redSidePositionPicks )
@@ -229,7 +203,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           )
         }}></div>
         <div
-        className='flex sm:hidden md:hidden lg:flex'
+        className='flex xs:hidden sm:hidden md:hidden lg:flex'
         style={{
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
@@ -249,6 +223,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
 {/* TEAM PICK 3 */}
 <div
         id={`${side}-team-pick-3`}
+        className='w-auto sm:w-24 md:w-24 lg:w-auto '
         style={{
           ...getSelectedPickStyle(side),
           ...( side === 'blue' ? styles.blueSidePositionPicks : styles.redSidePositionPicks )
@@ -264,7 +239,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           )
         }}></div>
         <div
-        className='flex sm:hidden md:hidden lg:flex'
+        className='flex xs:hidden sm:hidden md:hidden lg:flex'
         style={{
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
@@ -284,6 +259,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
 {/* TEAM PICK 4 */}
 <div
         id={`${side}-team-pick-4`}
+        className='w-auto sm:w-24 md:w-24 lg:w-auto '
         style={{
           ...getSelectedPickStyle(side),
           ...( side === 'blue' ? styles.blueSidePositionPicks : styles.redSidePositionPicks )
@@ -299,7 +275,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           )
         }}></div>
         <div
-        className='flex sm:hidden md:hidden lg:flex'
+        className='flex xs:hidden sm:hidden md:hidden lg:flex'
         style={{
           ...getSelectedPickTrainer(side),
           ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
@@ -319,6 +295,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
 {/* TEAM PICK 5 */}
 <div
         id={`${side}-team-pick-5`}
+        className='w-auto sm:w-24 md:w-24 lg:w-auto '
         style={{
           ...getSelectedPickStyle(side),
           ...( side === 'blue' ? styles.blueSidePositionPicks : styles.redSidePositionPicks )
@@ -334,8 +311,8 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
           )
         }}></div>
         <div
-          className='flex sm:hidden md:hidden lg:flex'
-          style={{
+        className='flex xs:hidden sm:hidden md:hidden lg:flex'
+        style={{
             ...getSelectedPickTrainer(side),
             ...( side === 'blue' ? styles.blueSidePositionTrainer : styles.redSidePositionTrainer )
         }}>
@@ -349,6 +326,7 @@ export default function TeamPickContainer(props: TeamPickContainerProps) {
             Trainer {side === 'blue' ? <span>5</span> : <span>10</span>}
           </div>
         </div>
+      </div>
       </div>
     </div>
   )

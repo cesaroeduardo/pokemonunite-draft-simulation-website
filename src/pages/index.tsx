@@ -94,7 +94,7 @@ export default function Home() {
   }
 
   return (
-    <div style={{position: 'relative'}}>
+    <div className='grid'>
 
       <CountdownContainer 
         currentTeam={PICK_ORDER[pickTurn].team === 0 ? 'roxo' : 'laranja'}
@@ -102,18 +102,23 @@ export default function Home() {
         setDraftStatus={setDraftStatus}
         countdownTime={countdownTime} />
 
-      {teams.map((team, idx) => <TeamPickContainer key={idx} team={team} side={idx === 0 ? "blue" : "red"} />)}
+        <div className='grid'>
 
-      <PokemonContainer
-        pickList={pickList}
-        pickTurn={PICK_ORDER[pickTurn]}
-        selectPick={selectPick}
-        MAX_COUNTDOWN_TIMER={MAX_COUNTDOWN_TIMER}
-        countdownTime={countdownTime}
-        draftStatus={draftStatus}
-        setDraftStatus={setDraftStatus}
-        setCountdownTime={setCountdownTime}
-        />
+        <div className='flex justify-between sm:mx-4 md:mx-6 lg:mx-8'>
+          {teams.map((team, idx) => <TeamPickContainer key={idx} team={team} side={idx === 0 ? "blue" : "red"} />)}
+        </div>
+        <PokemonContainer
+          pickList={pickList}
+          pickTurn={PICK_ORDER[pickTurn]}
+          selectPick={selectPick}
+          MAX_COUNTDOWN_TIMER={MAX_COUNTDOWN_TIMER}
+          countdownTime={countdownTime}
+          draftStatus={draftStatus}
+          setDraftStatus={setDraftStatus}
+          setCountdownTime={setCountdownTime}
+          />
+
+        </div>
       
     </div>
   )

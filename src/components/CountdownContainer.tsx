@@ -66,7 +66,6 @@ export default function CountdownContainer (props: CountdownContainerProps) {
       borderTopWidth: 13,
       margin: 'auto',
       color: '#000',
-      width: 520,
       height: 95,
       textAlign: 'center',
       paddingTop: 11,
@@ -74,12 +73,11 @@ export default function CountdownContainer (props: CountdownContainerProps) {
       backgroundColor: '#fff',
       borderBottomLeftRadius: 30,
       borderBottomRightRadius: 30,
-      marginBottom: 10
     }
   }
 
   return (
-    <div id='countdown-timer-container' style={getCountdownTimeContainer()}>
+    <div id='countdown-timer-container' className='scale-1 sm:w-[24rem] md:w-[32rem] lg:w-[36rem] sm:scale-[.85] md:scale-[1] lg:scale[1] mb-4' style={getCountdownTimeContainer()}>
 
       {(draftStatus === 0) && (
         <div>
