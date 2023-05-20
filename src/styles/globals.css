@@ -16,10 +16,25 @@
   }
 }
 
+html {
+  height: 100%;
+}
+
 body {
-  color: rgb(var(--foreground-rgb));
-  background: '#fff';
   background-image: url('/background.jpg');
   background-size: cover;
+  background-repeat: no-repeat;
   background-position: center;
+  height: 100%;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0 !important
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow: -moz-scrollbars-none;
 }

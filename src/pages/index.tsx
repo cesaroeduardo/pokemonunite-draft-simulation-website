@@ -1,120 +1,164 @@
-import { useEffect, useState } from 'react'
-import pokemons from '@/data/pokemons'
-import TeamPickContainer from '@/components/TeamPickContainer'
-import PokemonContainer from '@/components/PokemonContainer'
-import CountdownContainer from '@/components/CountdownContainer'
-import { DraftStatus } from '@/types/DraftStatus'
-
-const PICK_ORDER = [
-  { turn: 0, team: 0, picks: ['ban']},
-  { turn: 1, team: 1, picks: ['ban']},
-  { turn: 2, team: 0, picks: ['pick1']},
-  { turn: 3, team: 1, picks: ['pick1','pick2']},
-  { turn: 4, team: 0, picks: ['pick2','pick3']},
-  { turn: 5, team: 1, picks: ['pick3','pick4']},
-  { turn: 6, team: 0, picks: ['pick4','pick5']},
-  { turn: 7, team: 1, picks: ['pick5']}
-]
-const MAX_COUNTDOWN_TIMER = 20
-
-const styles = {
-  
-}
+import styles from "../styles/Home.module.css"
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import Modal from '@/components/Modal'
+import { Button, Input } from '@material-tailwind/react'
+import DraftSession from '@/types/DraftSession'
+import { postRequest } from '@/utils/requests'
+import { DraftType } from '@/components/DraftContainer'
+import environment from '@/config/environment'
 
 export default function Home() {
-  const [pickList, setPickList] = useState<Record<string, any>[]>(
-    pokemons
-      .filter(pkmn => pkmn.active)
-      .map(pkmn => ({...pkmn, picked: undefined}))
-  )
-  const [teams, setTeams] = useState<Record<string, any>[]>([
-    {
-      teamName: 'blueTeam',
-      ban: {},
+
+  const router = useRouter()
+
+  const [showTournamentInfo, setShowTournamentInfo] = useState(false)
+  const [showTournamentModal, setShowTournamentModal] = useState(false)
+  const [showCopyMessage, setShowCopyMessage] = useState({
+    team1: "",
+    team2: "",
+    spectator: ""
+  })
+  const [sessionDraftInfo, setSessionDraftInfo] = useState<DraftSession>({
+    lobbyId: "92374923",
+    team1: {
+      name: "Team 1",
+      ban1: {},
       pick1: {},
       pick2: {},
       pick3: {},
       pick4: {},
       pick5: {},
     },
-    {
-      teamName: 'redTeam',
-      ban: {},
+    team2: {
+      name: "Team 2",
+      ban1: {},
       pick1: {},
       pick2: {},
       pick3: {},
       pick4: {},
       pick5: {},
-    }
-  ])
-  const [pickTurn, setPickTurn] = useState(0)
-  const [draftStatus, setDraftStatus] = useState<DraftStatus>(DraftStatus.NotStarted) // 0 not-started, 1 started, 2 paused, 3 finished
-  const [countdownTime, setCountdownTime] = useState(0)
+    },
+    draftType: DraftType.PROFESSIONAL,
+    spectator: {
+      active: false
+    },
+    pickTurn: 0
+  })
 
-  useEffect(() => {
-    switch(draftStatus) {
-      case DraftStatus.Started:
-        setCountdownTime(MAX_COUNTDOWN_TIMER)
-        break
+  async function createSession() {
+    if (!sessionDraftInfo._id) {
+      const createSessionResponse = await postRequest<{ _id: string }>(`${environment.API}/drafts`, sessionDraftInfo)
 
-    }
-  }, [draftStatus]);
-
-  function selectPick (pokemon: any) {
-    const currentPickTurn = PICK_ORDER[pickTurn]
-    const teamsTemp = teams
-
-    for (let i = 0; i < currentPickTurn.picks.length; i++) {
-      const pick = currentPickTurn.picks[i]
-
-      if (teams[currentPickTurn.team][pick].name === undefined) {
-        teams[currentPickTurn.team] = {
-          ...teams[currentPickTurn.team],
-          [pick]: pokemon
-        }
-
-        const selectedPokemon = pickList.find(pkmn => pkmn.name === pokemon.name)
-        selectedPokemon && (selectedPokemon.picked = currentPickTurn.team)
-
-        break;
+      if (createSessionResponse?._id) {
+        setSessionDraftInfo({ ...sessionDraftInfo, _id: createSessionResponse._id })
+      } else {
+        console.error("session not created")
       }
     }
 
-    setTeams([...teamsTemp])
-
-    const finishTurn = currentPickTurn.picks.every(pick => teams[currentPickTurn.team][pick].name !== undefined)
-
-    if (finishTurn) {
-      const nextPickTurn = pickTurn + 1
-
-      if (nextPickTurn < PICK_ORDER.length) {
-        setPickTurn(nextPickTurn)
-      }
-    } 
+    setShowTournamentModal(!showTournamentModal)
   }
 
   return (
-    <div style={{position: 'relative'}}>
+    <>
+      <div className={styles.logo}>Draft Simulator</div>
+      <div className={styles.contentContainer}>
+        <p>Escolha um modo de Draft:</p>
 
-      <CountdownContainer 
-        currentTeam={PICK_ORDER[pickTurn].team === 0 ? 'roxo' : 'laranja'}
-        draftStatus={draftStatus}
-        setDraftStatus={setDraftStatus}
-        countdownTime={countdownTime} />
+        <div className={styles.buttonContainer}>
+          <Button color='blue' onClick={() => router.push('/draft')}>Individual</Button>
+          <p className={styles.typeTip}>Perfeito para estudo de draft</p>
+        </div>
 
-      {teams.map((team, idx) => <TeamPickContainer key={idx} team={team} side={idx === 0 ? "blue" : "red"} />)}
+        <hr />
 
-      <PokemonContainer
-        pickList={pickList}
-        pickTurn={PICK_ORDER[pickTurn]}
-        selectPick={selectPick}
-        MAX_COUNTDOWN_TIMER={MAX_COUNTDOWN_TIMER}
-        countdownTime={countdownTime}
-        draftStatus={draftStatus}
-        setDraftStatus={setDraftStatus}
-        setCountdownTime={setCountdownTime}
-        />
-      
-    </div>
+        <div className={styles.buttonContainer}>
+          <Button color='blue' onClick={() => setShowTournamentInfo(!showTournamentInfo)}>Professional</Button>
+          <p className={styles.typeTip}>Perfeito para Scrims e Torneios</p>
+        </div>
+
+        <div className={styles.tournamentContainer} style={{ display: showTournamentInfo ? 'block' : 'none' }}>
+          <form className="mt-8 mb-2 w-50">
+            <div className="mb-4 flex flex-col gap-6">
+              <Input value={sessionDraftInfo.team1.name} onChange={(e) => {
+                setSessionDraftInfo({
+                  ...sessionDraftInfo,
+                  team1: {
+                    ...sessionDraftInfo.team1,
+                    name: e.target.value
+                  }
+                })
+              }} label="Time 1" />
+              <Input value={sessionDraftInfo.team2.name} onChange={(e) => {
+                setSessionDraftInfo({
+                  ...sessionDraftInfo,
+                  team2: {
+                    ...sessionDraftInfo.team2,
+                    name: e.target.value
+                  }
+                })
+              }} label="Time 2" />
+            </div>
+            {/* <Checkbox
+              label={
+                (
+                  <Typography
+                    variant="small"
+                    color="gray"
+                    className="flex items-center font-normal"
+                  >
+                    Possui espectador
+                  </Typography>
+                )
+              }
+              checked={sessionDraftInfo.spectator.active}
+              onChange={() => setSessionDraftInfo({...sessionDraftInfo, spectator: { ...sessionDraftInfo.spectator, active: !sessionDraftInfo.spectator.active }})}
+              containerProps={{ className: "-ml-2.5" }}
+            /> */}
+            <Button color='light-green' className="mt-6" onClick={createSession} fullWidth>
+              Criar Sessão
+            </Button>
+
+            <Modal
+              show={showTournamentModal}
+              toogleModal={() => setShowTournamentModal(!showTournamentModal)}
+              header={"Informações de Draft"}>
+              <p>
+                <strong>Draft do Time 1:</strong>
+                <span style={{ cursor: 'pointer' }} onClick={() => {
+                  navigator.clipboard.writeText(`${environment.DOMAIN}/draft/${sessionDraftInfo._id}?viewType=team1`)
+
+                  setShowCopyMessage({ ...showCopyMessage, team1: "(copiado)" })
+                  setTimeout(() => setShowCopyMessage({ ...showCopyMessage, team1: "" }), 5000)
+                }}> clique para copiar o link <small>{showCopyMessage.team1}</small></span>
+              </p>
+              <p>
+                <strong>Draft do Time 2:</strong>
+                <span style={{ cursor: 'pointer' }} onClick={() => {
+                  navigator.clipboard.writeText(`${environment.DOMAIN}/draft/${sessionDraftInfo._id}?viewType=team2`)
+
+                  setShowCopyMessage({ ...showCopyMessage, team2: "(copiado)" })
+                  setTimeout(() => setShowCopyMessage({ ...showCopyMessage, team2: "" }), 5000)
+                }}> clique para copiar o link <small>{showCopyMessage.team2}</small></span>
+              </p>
+              {
+                sessionDraftInfo.spectator.active && (
+                  <p>
+                    <strong>Espectador:</strong>
+                    <span style={{ cursor: 'pointer' }} onClick={() => {
+                      navigator.clipboard.writeText(`${environment.DOMAIN}/draft/${sessionDraftInfo._id}?viewType=spectator`)
+
+                      setShowCopyMessage({ ...showCopyMessage, spectator: "(copiado)" })
+                      setTimeout(() => setShowCopyMessage({ ...showCopyMessage, spectator: "" }), 5000)
+                    }}> Copiar link <small>{showCopyMessage.spectator}</small></span>
+                  </p>
+                )
+              }
+            </Modal>
+          </form>
+        </div>
+      </div>
+    </>
   )
 }
